@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 //The while loop is doing a very simple job, for every response message it checks if the correlationId is the one we're looking for. If so, it saves the response.
 //Finally we return the response back to the user.
 
-namespace _06_Client
+namespace _06_Client 
 {
     class Program
     {
