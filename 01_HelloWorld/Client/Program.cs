@@ -18,7 +18,7 @@ namespace Client
                 {
                     channel.QueueDeclare("hello", false, false, false, null);
 
-                    string message = "Hello World!";
+                    string message = "Hello World!" + "_" + DateTime.Now.ToString();
                     var body = Encoding.UTF8.GetBytes(message);
 
                     channel.BasicPublish("", "hello", null, body);
