@@ -17,6 +17,7 @@ namespace Server
             {
                 using (var channel = connection.CreateModel())
                 {
+                    //定义队列（hello为队列名）
                     channel.QueueDeclare("hello", false, false, false, null);
 
                     var consumer = new QueueingBasicConsumer(channel);
@@ -26,6 +27,7 @@ namespace Server
                                              "To exit press CTRL+C");
                     while (true)
                     {
+                        //接受客户端发送的消息并打印出来
                         var ea = (BasicDeliverEventArgs)consumer.Queue.Dequeue();
 
                         var body = ea.Body;
