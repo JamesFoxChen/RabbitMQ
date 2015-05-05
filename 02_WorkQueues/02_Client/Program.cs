@@ -19,6 +19,7 @@ namespace _02_Client
                 using (var channel = connection.CreateModel())
                 {
                     //设置队列持久化，队列重启也没事；
+                    //队列持久化意味着重启后，队列会再出现，但不等同于消息持久化
                     //之前未设置队列持久化的队列，不能修改其持久化属性
                     //【客户端和服务端都需要设置持久化】
                     bool durable = true;
@@ -29,8 +30,8 @@ namespace _02_Client
 
                     var properties = channel.CreateBasicProperties();
 
-                    //客户端设置消息持久化
-                    //properties.DeliveryMode = 2;
+                    //客户端设置消息持久化(队列持久化和消息持久化必须同时设置）
+                    //properties.DeliveryMode = 2;  等价于SetPersistent
                     properties.SetPersistent(true);                     
 
                     channel.BasicPublish("", "task_queue", properties, body);
@@ -41,7 +42,7 @@ namespace _02_Client
 
         private static string GetMessage(string[] args)
         {
-            return ((args.Length > 0) ? string.Join(" ", args) : "Hello World!");
+            return ((args.Length > 0) ? string.Join(" ", args) : "Hello World!  " + DateTime.Now.ToString());
         }
     }
 }
