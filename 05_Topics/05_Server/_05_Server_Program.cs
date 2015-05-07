@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 //客服端发送消息的RoutingKey是quick.orange.rabbit，匹配"*.orange.*","*.*.rabbit"，这两个服务端都会接收到消息
 namespace _05_Server
 {
-    class Program
+    class _05_Server_Program
     {
         static void Main(string[] args)
         {

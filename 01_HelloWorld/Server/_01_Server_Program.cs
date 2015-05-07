@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-    class Program
+    class _01_Server_Program
     {
         static void Main(string[] args)
         {

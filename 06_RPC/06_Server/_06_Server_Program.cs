@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace _06_Server
 {
-    class Program
+    class _06_Server_Program
     {
         static void Main(string[] args)
         {

@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//http://www.rabbitmq.com/tutorials/tutorial-three-dotnet.html
 
 namespace _03_Server
 {
-    class Program
+    class _03_Server_Program
     {
         static void Main(string[] args)
         {
@@ -22,6 +23,7 @@ namespace _03_Server
                     channel.ExchangeDeclare("logs", "fanout");  
 
                     //随机定义一个队列
+                    //服务端启动多次，可将exchange和多个随机队列进行绑定，用于测试发布/订阅模式
                     //In the .NET client, when we supply no parameters to queueDeclare() we create a non-durable, 
                     //exclusive, autodelete queue with a generated name:
                     //At that point queueName contains a random queue name. For example it may look like amq.gen-JzTY20BRgKO-HjmUJj0wLg.
@@ -40,6 +42,7 @@ namespace _03_Server
 
                         var body = ea.Body;
                         var message = Encoding.UTF8.GetString(body);
+                        message = "QueneName:" + queueName + "   " + message;  //队列名+消息
                         Console.WriteLine(" [x] {0}", message);
                     }
                 }

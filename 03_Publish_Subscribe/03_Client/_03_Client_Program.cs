@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace _03_Client
 {
-    class Program
+    class _03_Client_Program
     {
         static void Main(string[] args)
         {
@@ -17,8 +17,8 @@ namespace _03_Client
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                //声明Exchange，模式为fanout（日志模式）
-                //客户端和服务端都需要定义
+                //声明exchange，模式为fanout（日志模式）
+                //客户端和服务端都需要定义exchange，且名称需要一致
                 channel.ExchangeDeclare("logs", "fanout");  
 
                 var message = GetMessage(args);
@@ -34,7 +34,7 @@ namespace _03_Client
 
         private static string GetMessage(string[] args)
         {
-            return ((args.Length > 0) ? string.Join(" ", args) : "info: Hello World!");
+            return ((args.Length > 0) ? string.Join(" ", args) : "info: Hello World!" + "Date:" + DateTime.Now.ToString());
         }
     }
 }

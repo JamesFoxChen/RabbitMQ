@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace _06_Client 
 {
-    class Program
+    class _06_Client_Program
     {
         static void Main(string[] args)
         {

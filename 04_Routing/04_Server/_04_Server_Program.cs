@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 //客户端发送时只将消息发送到匹配RoutingKey的服务端
 namespace _04_Server
 {
-    class Program
+    class _04_Server_Program
     {
         static void Main(string[] args)
         {
@@ -24,28 +24,21 @@ namespace _04_Server
             {
                 using (var channel = connection.CreateModel())
                 {
+                    //direct_logs为exchange名称
                     //exchange类型设为direct，不适用fanout的广播模式
+                    //direct要通过router传播，fanout不用通过router，直接通过广播
                     //客户端和服务端都需要设置
                     channel.ExchangeDeclare("direct_logs", "direct");
 
                     //随机声明队列名称
                     var queueName = channel.QueueDeclare().QueueName;
 
-                    //if (args.Length < 1)
-                    //{
-                    //    Console.Error.WriteLine("Usage: {0} [info] [warning] [error]",
-                    //                            Environment.GetCommandLineArgs()[0]);
-                    //    Environment.ExitCode = 1;
-                    //    return;
-                    //}
+                    //exhange、队列、router三个条件同时匹配，服务端才会接受到消息
+                    string[] routerArray = new string[] { "router1", "router2", "router3" };
+                    string routerName = routerArray[new Random().Next(0, 3)];
+                    channel.QueueBind(queueName, "direct_logs", routerName);
 
-                    //string[] argsSeverity = new string[] { "info", "warning", "error" };
-                    string[] argsSeverity = new string[] { "info"};
-                    foreach (var severity in argsSeverity)
-                    {
-                        channel.QueueBind(queueName, "direct_logs", severity);
-                    }
-
+                    Console.WriteLine(" Server Router Name:" + routerName);
                     Console.WriteLine(" [*] Waiting for messages. " +
                                       "To exit press CTRL+C");
 
@@ -58,6 +51,8 @@ namespace _04_Server
 
                         var body = ea.Body;
                         var message = Encoding.UTF8.GetString(body);
+                        message = "QueneName:" + queueName + "   " + message;  //队列名+消息
+
                         var routingKey = ea.RoutingKey;
                         Console.WriteLine(" [x] Received '{0}':'{1}'",
                                           routingKey, message);
