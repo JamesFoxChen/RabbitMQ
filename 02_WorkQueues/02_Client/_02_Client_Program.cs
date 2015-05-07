@@ -42,7 +42,7 @@ namespace _02_Client
                     //每条消息的过期时间不同，如果要删除所有过期消息，势必要扫描整个队列，
                     //所以等到此消息即将被消费时再判定是否过期(消息到队列头)，如果过期，再进行删除。
 
-                    //properties.Expiration = "10000";
+                    //properties.Expiration = "20000";   
                     
                     //客户端设置消息持久化(队列持久化和消息持久化必须同时设置）
                     //properties.DeliveryMode = 2;  等价于SetPersistent

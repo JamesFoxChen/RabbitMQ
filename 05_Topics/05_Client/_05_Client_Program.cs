@@ -20,8 +20,10 @@ namespace _05_Client
                     //客户端和服务端都需要定义
                     channel.ExchangeDeclare("topic_logs", "topic");
 
-                    var routingKey = "quick.orange.rabbit";
-                    //routingKey = "lazy.orange.rabbit";
+                    //下面两种routingKey，服务端都可以捕获到
+                    //var routingKey = "quick.orange.rabbit";
+                    var routingKey = "lazy.11.22";
+
                     var message = "topic exchange: Hello World!";
                     var body = Encoding.UTF8.GetBytes(message);
                     channel.BasicPublish("topic_logs", routingKey, null, body);

@@ -34,6 +34,7 @@ namespace _05_Server
                     //"*.orange.*" and Q2 with "*.*.rabbit" and "lazy.#".
                     //逗号隔开的多种匹配条件
                     string[] argsSeverity = new string[] { "*.orange.*", "*.*.rabbit", "lazy.#" };
+                    //一个队列可以绑定多个不同的routerkey条件
                     foreach (var bindingKey in argsSeverity)
                     {
                         channel.QueueBind(queueName, "topic_logs", bindingKey);
