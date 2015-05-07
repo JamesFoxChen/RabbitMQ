@@ -30,7 +30,7 @@ namespace _05_Server
                     //随机声明队列名称
                     var queueName = channel.QueueDeclare();
 
-                    //We created three bindings: Q1 is bound with binding key 
+                    //满足多个router条件（router不是固定的，而是可匹配的）
                     //"*.orange.*" and Q2 with "*.*.rabbit" and "lazy.#".
                     //逗号隔开的多种匹配条件
                     string[] argsSeverity = new string[] { "*.orange.*", "*.*.rabbit", "lazy.#" };
@@ -39,7 +39,7 @@ namespace _05_Server
                         channel.QueueBind(queueName, "topic_logs", bindingKey);
                     }
 
-                    Console.WriteLine(" [*] Waiting for messages. " +
+                    Console.WriteLine(DateTime.Now.ToString() + " [*] Waiting for messages. " +
                                       "To exit press CTRL+C");
 
                     var consumer = new QueueingBasicConsumer(channel);
@@ -50,8 +50,10 @@ namespace _05_Server
                         var ea = (BasicDeliverEventArgs)consumer.Queue.Dequeue();
                         var body = ea.Body;
                         var message = Encoding.UTF8.GetString(body);
+                        message = "QueneName:" + queueName + "   " + message;  //队列名+消息
+
                         var routingKey = ea.RoutingKey;
-                        Console.WriteLine(" [x] Received '{0}':'{1}'",
+                        Console.WriteLine(" [x] Received 'Router：{0}':'{1}'",
                                           routingKey, message);
                     }
                 }

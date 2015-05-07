@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,11 +27,60 @@ namespace _06_Client
 
             Console.WriteLine(" [x] Requesting fib(30)");
             var response = rpcClient.Call("30"); //计算结果
-            Console.WriteLine(" [.] Got '{0}'", response);
+            Console.WriteLine(" [.] Done '{0}'", response);
 
             rpcClient.Close();
 
             Console.ReadKey();
+        }
+    }
+
+    class RPCClient
+    {
+        private IConnection connection;
+        private IModel channel;
+        private string replyQueueName;
+        private QueueingBasicConsumer consumer;
+        private string routingKey = "rpc_queue";
+
+        public RPCClient()
+        {
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+            this.connection = factory.CreateConnection();
+            this.channel = this.connection.CreateModel();
+            //创建确认队列
+            this.replyQueueName = this.channel.QueueDeclare("replyQueueName", false, false, false, null); 
+            this.consumer = new QueueingBasicConsumer(this.channel);
+            this.channel.BasicConsume(this.replyQueueName, true, this.consumer);
+        }
+
+        public string Call(string message)
+        {
+            var corrId = Guid.NewGuid().ToString();
+
+            //创建确认相关属性
+            var props = channel.CreateBasicProperties();
+            props.ReplyTo = replyQueueName;
+            props.CorrelationId = corrId;
+
+            var messageBytes = Encoding.UTF8.GetBytes(message);
+            channel.BasicPublish("", this.routingKey, props, messageBytes);
+
+            while (true)
+            {
+                var ea = (BasicDeliverEventArgs)consumer.Queue.Dequeue();
+                if (ea.BasicProperties.CorrelationId == corrId)
+                {
+                    return Encoding.UTF8.GetString(ea.Body);
+                }
+            }
+
+            return "";
+        }
+
+        public void Close()
+        {
+            connection.Close();
         }
     }
 }

@@ -27,6 +27,7 @@ namespace _03_Client
                 //logs表示exchange的名称，如果设置""则表示使用默认的exchange
                 //设置exchange名称后无需设置队列名称，在服务端exchange会和队列进行绑定
                 //一个exchange绑定到多个队列，消息先发送到exchange，然后exchange再将消息分发给绑定的队列
+                //客户端直接通过exchange发送消息，不用定义队列
                 channel.BasicPublish("logs", "", null, body);
                 Console.WriteLine(" [x] Sent {0}", message);
             }

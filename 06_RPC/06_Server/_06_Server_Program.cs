@@ -35,33 +35,42 @@ namespace _06_Server
                 using (var channel = connection.CreateModel())
                 {
                     //声明一个队列
-                    channel.QueueDeclare("rpc_queue", false, false, false, null);
+                    string queueName = "rpc_queue";
+                    channel.QueueDeclare(queueName, false, false, false, null);
 
                     //1表示队列每次只发送一个消息给consumer，直到consumer返回ack才发送下一个消息
                     //为了解决consumer负载过多问题
-                    channel.BasicQos(0, 1, false);
+                    ushort prefetchCount = 1;
+                    channel.BasicQos(0, prefetchCount, false);
                     var consumer = new QueueingBasicConsumer(channel);
 
                     //consumer启动确认机制，处理完成告知队列，队列再移除消息
                     bool noAck = false;
-                    channel.BasicConsume("rpc_queue", noAck, consumer);
+                    channel.BasicConsume(queueName, noAck, consumer);
                     Console.WriteLine(" [x] Awaiting RPC requests");
 
                     while (true)
                     {
                         string response = null;
-                        var ea =
-                            (BasicDeliverEventArgs)consumer.Queue.Dequeue();
+                        var ea = (BasicDeliverEventArgs)consumer.Queue.Dequeue();
 
                         var body = ea.Body;
+                        //获取客户端设置的确认相关属性
                         var props = ea.BasicProperties;
-                        //设置发送给确认队列(replyQueueName)的信息
+
+                        //创建一个新的包含确认属性的对象
                         var replyProps = channel.CreateBasicProperties();
                         replyProps.CorrelationId = props.CorrelationId;
-               
+                        replyProps.ReplyTo = props.ReplyTo;
+
                         try
                         {
+                            //获取客户端发送到队列的消息，并显示
                             var message = Encoding.UTF8.GetString(body);
+                            //message = "QueneName:" + queueName + "   " + message;  //队列名+消息
+                            Console.WriteLine(" [x] {0}", message);
+
+                            //获取要发送到确认队列的消息
                             int n = int.Parse(message);
                             Console.WriteLine(" [.] fib({0})", message);
                             response = fib(n).ToString();
@@ -73,11 +82,15 @@ namespace _06_Server
                         }
                         finally
                         {
-                            var responseBytes =
-                                Encoding.UTF8.GetBytes(response);
-                            //确认消息发送给确认队列(replyQueueName)
-                            channel.BasicPublish("", props.ReplyTo, replyProps,
-                                                 responseBytes);
+                            var responseBytes = Encoding.UTF8.GetBytes(response);
+
+                            //确认消息发送给确认队列(replyQueueName)，供客户端使用
+                            channel.BasicPublish("", replyProps.ReplyTo, replyProps,
+                                                responseBytes);
+                            //channel.BasicPublish("", props.ReplyTo, replyProps,
+                            //                     responseBytes);
+
+                            //服务端发送确认消息到队列，以便从队列获取下一批消息
                             channel.BasicAck(ea.DeliveryTag, false);
                         }
                     }

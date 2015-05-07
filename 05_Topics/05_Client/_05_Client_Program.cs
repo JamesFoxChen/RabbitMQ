@@ -21,7 +21,8 @@ namespace _05_Client
                     channel.ExchangeDeclare("topic_logs", "topic");
 
                     var routingKey = "quick.orange.rabbit";
-                    var message = "quick.orange.rabbit" + "Hello World!";
+                    //routingKey = "lazy.orange.rabbit";
+                    var message = "topic exchange: Hello World!";
                     var body = Encoding.UTF8.GetBytes(message);
                     channel.BasicPublish("topic_logs", routingKey, null, body);
                     Console.WriteLine(" [x] Sent '{0}':'{1}'", routingKey, message);
