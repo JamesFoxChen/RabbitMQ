@@ -42,3 +42,12 @@
 六、关于启动多个服务端（consumer）后，只有一个consumer接收消息的问题 (01项目有此问题，02项目无此问题，原因未知，可能和ack有关)
     1、先启动客户端、后启动服务端会导致此问题
 	2、先启动多个服务端，再启动客户端，服务端可正常接受消息
+
+
+七、SharedQueue
+		This receives the message and stuffs it into a threadsafe SharedQueue instance inside of the consumer object. This means new subscribed
+	messages can stream into consumer unblocked by the actions of your code actually
+	processing those messages from the SharedQueue. 
+
+八、web api接口文档
+    http://hg.rabbitmq.com/rabbitmq-management/raw-file/rabbitmq_v3_3_4/priv/www/api/index.html

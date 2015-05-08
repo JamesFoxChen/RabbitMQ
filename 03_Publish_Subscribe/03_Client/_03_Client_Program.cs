@@ -19,7 +19,7 @@ namespace _03_Client
             {
                 //声明exchange，模式为fanout（日志模式）
                 //客户端和服务端都需要定义exchange，且名称需要一致
-                channel.ExchangeDeclare("logs", "fanout");  
+                channel.ExchangeDeclare("logs", ExchangeType.Fanout);  
 
                 var message = GetMessage(args);
                 var body = Encoding.UTF8.GetBytes(message);
