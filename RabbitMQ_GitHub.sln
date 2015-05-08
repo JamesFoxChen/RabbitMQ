@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_Client", "02_WorkQueues\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03_Publish_Subscribe", "03_Publish_Subscribe", "{73099064-BA25-4160-85DA-F7F5D4FDAD0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "01_HelloWorld\Server\Server.csproj", "{CD9A61CB-F7D1-47A1-A184-99CA8F84BF37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_Server", "01_HelloWorld\Server\01_Server.csproj", "{CD9A61CB-F7D1-47A1-A184-99CA8F84BF37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "01_HelloWorld\Client\Client.csproj", "{027CACFA-556B-47C9-ADBE-6CB9875336B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_Client", "01_HelloWorld\Client\01_Client.csproj", "{027CACFA-556B-47C9-ADBE-6CB9875336B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_Server", "03_Publish_Subscribe\03_Server\03_Server.csproj", "{B75F46C9-46AF-4FD0-B9C3-6991465F3ADF}"
 EndProject
