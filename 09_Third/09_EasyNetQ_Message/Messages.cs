@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _09_EasyNetQ_Client
+namespace _09_EasyNetQ_Message
 {
-    class Program
+    public class TextMessage
     {
-        static void Main(string[] args)
-        {
-        }
+        public string Text { get; set; }
     }
 }
