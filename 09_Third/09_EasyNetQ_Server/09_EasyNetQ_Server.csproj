@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NamedQueueSubscriber.cs" />
+    <Compile Include="Subscriber.cs" />
     <Compile Include="_09_Server_Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

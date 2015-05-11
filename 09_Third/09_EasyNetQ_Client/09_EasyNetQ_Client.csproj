@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NamedQueuePublisher.cs" />
+    <Compile Include="Publisher.cs" />
     <Compile Include="_09_Client_Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
