@@ -36,11 +36,8 @@
       <HintPath>..\..\packages\EasyNetQ.0.47.10.383\lib\net40\EasyNetQ.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="JwifiRoute.Service.Model">
-      <HintPath>..\09_EasyNetQ_Message\bin\Debug\JwifiRoute.Service.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Bson, Version=2.0.0.828, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MongoDB.Bson.2.0.0\lib\net45\MongoDB.Bson.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.4.3.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
@@ -58,6 +55,8 @@
   <ItemGroup>
     <Compile Include="GlobalRequestLogSubscriber.cs" />
     <Compile Include="NamedQueueSubscriber.cs" />
+    <Compile Include="PoorSubscriber.cs" />
+    <Compile Include="RabbitClientServer.cs" />
     <Compile Include="Subscriber.cs" />
     <Compile Include="_09_Server_Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +70,9 @@
       <Project>{609b82cf-df03-4ec2-b832-216fd3ce2d01}</Project>
       <Name>09_EasyNetQ_Message</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

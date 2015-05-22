@@ -44,12 +44,13 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalRequestLogPubliser.cs" />
     <Compile Include="NamedQueuePublisher.cs" />
+    <Compile Include="PoorPublisher.cs" />
     <Compile Include="Publisher.cs" />
     <Compile Include="_09_Client_Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
