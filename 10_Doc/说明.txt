@@ -1,0 +1,53 @@
+
+一、exchange的三种模式
+   1、Direct Exchange(需要设置exchange)   处理路由键，需要将一个队列绑定到交换机上，要求该消息与一个特定的路由键完全匹配。这是一个完整的匹配。
+   2、Fanout Exchange(不需要设置exchange) 不处理路由键，你只需要简单的将队列绑定到交换机上。一个发送到交换机的消息都会被转发到与该交换机绑定的所有队列上。
+					                      很像子网广播，每台子网内的主机都获得了一份复制的消息。Fanout交换机转发消息是最快的。 
+   3、Topic Exchange(需要设置exchange)    将路由键和某模式进行匹配。此时队列需要绑定要一个模式上。符号“*”匹配一个词，符号“#”匹配一个或多个词。
+   4、
+
+   http://lynnkong.iteye.com/blog/1699684
+   http://blog.csdn.net/jiao_fuyou/article/details/22923935
+
+二、持久化设置
+   1、队列和消息都需要设置持久化
+   2、队列设置持久化
+		  bool durable = true;
+          channel.QueueDeclare("task_queue", durable, false, false, null);
+   3、消息设置持久化
+		 var properties = channel.CreateBasicProperties();
+         //客户端设置消息持久化(队列持久化和消息持久化必须同时设置）
+         //properties.DeliveryMode = 2;  等价于SetPersistent
+         properties.SetPersistent(true);        
+
+
+三、设置处理数限制
+	//1表示队列每次只发送一个消息给consumer，直到consumer返回ack才发送下一个消息
+	//为了解决consumer负载过多问题
+	channel.BasicQos(0, 1, false);
+
+四、客户端调用官方文档（Java版）
+	1、也有.net版本，但是Java版更加详细
+	2、http://www.rabbitmq.com/releases/rabbitmq-java-client/v3.5.1/rabbitmq-java-client-javadoc-3.5.1/
+
+五、关于消息确认机制（见_02_Server_Program.cs）
+	1、服务端向队列发送确认消息后才会从队列中取下一批消息（一个或多个)
+	2、如果设置了消息确认机制，但是没有向队列发送确认消息，那么服务端会一直处于阻塞状态，不会再取下一批消息
+	3、同时启动多个服务时，第1个服务一次获取3个消息；第2个服务只能从第4个消息获取
+       如果第1个服务处理完第1个消息后被关闭，
+       那么后面的第2，3个消息处于未确认消息，仍然在队列中，第2个服务会自动取出第2,3个消息进行处理
+	4、如果消费者因宕机或链接失败等原因没有发送ACK（不同于ActiveMQ，在RabbitMQ里，消息没有过期的概念），则RabbitMQ会将消息重新发送给其他监听在队列的下一个消费者
+
+
+六、关于启动多个服务端（consumer）后，只有一个consumer接收消息的问题 (01项目有此问题，02项目无此问题，原因未知，可能和ack有关)
+    1、先启动客户端、后启动服务端会导致此问题
+	2、先启动多个服务端，再启动客户端，服务端可正常接受消息
+
+
+七、SharedQueue
+		This receives the message and stuffs it into a threadsafe SharedQueue instance inside of the consumer object. This means new subscribed
+	messages can stream into consumer unblocked by the actions of your code actually
+	processing those messages from the SharedQueue. 
+
+八、web api接口文档
+    http://hg.rabbitmq.com/rabbitmq-management/raw-file/rabbitmq_v3_3_4/priv/www/api/index.html
