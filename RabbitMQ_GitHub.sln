@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06_Client", "06_RPC\06_Clie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10_Doc", "10_Doc", "{5280885C-F5D4-4586-9161-EE48BA1FD16B}"
 	ProjectSection(SolutionItems) = preProject
-		说明.txt = 说明.txt
+		10_Doc\说明.txt = 10_Doc\说明.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "07_ComplexData", "07_ComplexData", "{B26C8346-27FD-4949-A5EC-0F6240CC6DE0}"
