@@ -4,53 +4,53 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using _11_MyMessage.Common.Client;
 
 namespace _11_MyMessage.Common.Error
 {
-    public class ErrorQueueMng
+    public class ErrorQueueMng : QueuePublishBase
     {
+        #region 单例模式
+        private static ErrorQueueMng instance = null;
+        public static ErrorQueueMng GetInstance()
+        {
+            if (instance == null)
+            {
+                lock ("")
+                {
+                    if (instance == null)
+                    {
+                        instance = new ErrorQueueMng();
+                    }
+                }
+            }
+            return instance;
+        }
+        private ErrorQueueMng() { }
+        #endregion
+
+
         /// <summary>
         /// 发送到队列
         /// </summary>
         /// <param name="msg"></param>
-        public static void SendToErrorQueue(ErrorQueueModel msg)
+        public void SendToQueue(ErrorQueueModel msg)
         {
             string queueName = QueueName.Common_Error_Queue;
+            this.InitChannel(queueName);
+            this.LogText(queueName, msg);
 
             try
             {
-                var factory = new ConnectionFactory() { HostName = QueueSetttiong.HostName };
-                using (IConnection connection = factory.CreateConnection())
-                {
-                    using (var channel = connection.CreateModel())
-                    {
-                        //持久化
-                        bool durable = true;
-                        channel.QueueDeclare(queueName, durable, false, false, null);
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(msg));
+                channel.BasicPublish("", queueName, properties, body);
 
-                        //持久化
-                        var properties = channel.CreateBasicProperties();
-                        //properties.Headers = new Dictionary<string, object>();
-                        properties.SetPersistent(true);
 
-                        var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(msg));
-                        channel.BasicPublish("", queueName, properties, body);
-                    }
-                }
-
-                //throw new Exception("sf");
+                //throw new Exception("kll");
             }
             catch (Exception ex)
             {
-                //记录文本日志
-                //string exMsg = "写入错误队列异常";
-                var logErr = new ErrorQueueModel();
-                logErr.ErrMessage = ex.Message;
-                logErr.ErrStackTrace = ex.StackTrace;
-                logErr.QueueBody = msg.QueueBody;
-                logErr.QueueName = msg.QueueName;
-
-                //记日志 .Error("写入错误队列异常（ErrorQueueMng-->SendToErrorQueue）：" + JsonConvert.SerializeObject(logErr));
+                TextLoggingService.Error("发送消息异常(异常队列)（队列名：" + queueName + "消息：" + msg + "异常信息：" + ex.Message);
             }
         }
     }

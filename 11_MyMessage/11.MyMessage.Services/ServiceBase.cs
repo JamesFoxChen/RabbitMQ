@@ -48,6 +48,7 @@ namespace _11.MyMessage.Services
                             T body = default(T);
                             try
                             {
+                                //throw new Exception("处理消息发生异常");
                                 string message = Encoding.UTF8.GetString(ea.Body);
                                 body = JsonConvert.DeserializeObject<T>(message);
 
@@ -92,7 +93,13 @@ namespace _11.MyMessage.Services
 
             if (QueueSetttiong.IsWriteTempQueue)
             {
-                TempQueueMng.SendToTempQueue(Enum_QueueType.Consumer, QueueName.LogQueue, body);
+                TempQueueMng.GetInstance().SendToQueue(
+                                new TempQueueModel
+                                {
+                                    Type = Enum_QueueType.Publish,
+                                    QueueName = queueName,
+                                    QueueBody = body
+                                });
             }
         }
 
@@ -103,14 +110,16 @@ namespace _11.MyMessage.Services
         /// <param name="body"></param>
         private void sendToErrorQueue(Exception ex, T body)
         {
-            ErrorQueueMng.SendToErrorQueue(new ErrorQueueModel
+            var model = new ErrorQueueModel
             {
                 Type = Enum_QueueType.Consumer.ToString(),
                 ErrMessage = ex.Message,
                 ErrStackTrace = ex.StackTrace,
                 QueueName = QueueName.LogQueue,
                 QueueBody = body
-            });
+            };
+
+            ErrorQueueMng.GetInstance().SendToQueue(model);
         }
     }
 }

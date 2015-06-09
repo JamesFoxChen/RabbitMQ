@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using _11_MyMessage.Common;
 using _11_MyMessage.Common.QueueModel;
 using Newtonsoft.Json;
+using _11_MyMessage.Common.Client;
 
 namespace _11.MyMessage.Client
 {
@@ -36,12 +37,10 @@ namespace _11.MyMessage.Client
         /// <param name="msg"></param>
         public void SendToQueue(LogQueueModel msg)
         {
-            InitChannel(QueueName.LogQueue, msg);
+            this.InitChannelWithLog(QueueName.LogQueue, msg);
 
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(msg));
-            channel.BasicPublish("", queueName, properties, body);
+            channel.BasicPublish("", QueueName.LogQueue, properties, body);
         }
-
-     
     }
 }

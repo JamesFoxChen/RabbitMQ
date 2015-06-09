@@ -1,6 +1,0 @@
-﻿		1、cmd-->cd 程序目录(直接定位到exe文件所在目录）
-　　　　　　windows 7   cd C:
-         　　 Widows Serve  cd /d C:
-        2、安装服务：JwifiRoute.Message.LogServices.exe install
-        3、启动服务：JwifiRoute.Message.LogServices.exe start
-        4、卸载服务（需要执行多次才能卸载服务）：JwifiRoute.Message.LogServices.exe uninstall
