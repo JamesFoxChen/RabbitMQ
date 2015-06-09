@@ -17,6 +17,8 @@ namespace _04_Client
                 using (var channel = connection.CreateModel())
                 {
                     //exchange类型设为direct，不适用fanout的广播模式
+                    //该模式下：设置router后，启动多个服务端，每个服务端绑定不同的router值，发送消息时
+                    //只会把消息发送到匹配router值的服务端
                     //客户端和服务端都需要设置
                     channel.ExchangeDeclare("direct_logs", "direct");
 

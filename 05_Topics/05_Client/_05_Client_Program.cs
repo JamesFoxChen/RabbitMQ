@@ -17,6 +17,7 @@ namespace _05_Client
                 using (var channel = connection.CreateModel())
                 {
                     //定义topic类型的exchange，用于多个条件的匹配判断
+                    //该模式下：可匹配多个router
                     //客户端和服务端都需要定义
                     channel.ExchangeDeclare("topic_logs", "topic");
 

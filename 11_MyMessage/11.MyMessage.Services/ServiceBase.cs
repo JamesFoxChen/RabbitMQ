@@ -96,7 +96,7 @@ namespace _11.MyMessage.Services
                 TempQueueMng.GetInstance().SendToQueue(
                                 new TempQueueModel
                                 {
-                                    Type = Enum_QueueType.Publish,
+                                    Type = Enum_QueueType.Consumer,
                                     QueueName = queueName,
                                     QueueBody = body
                                 });

@@ -17,7 +17,8 @@ namespace _03_Client
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                //声明exchange，模式为fanout（日志模式）
+                //声明exchange，模式为fanout（广播模式）
+                //该模式下启动多个服务端，客户端发送一个消息后，所有的服务端都可以接收到
                 //客户端和服务端都需要定义exchange，且名称需要一致
                 channel.ExchangeDeclare("logs", ExchangeType.Fanout);  
 
