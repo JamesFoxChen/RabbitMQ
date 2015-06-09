@@ -38,8 +38,8 @@ namespace _02_Server
                     //同时启动多个服务时，第1个服务一次获取3个消息(第1个即使没ack，也会取第2个消息)；第2个服务只能从第4个消息获取
                     //如果第1个服务处理完第1个消息后被关闭，
                     //那么后面的第2，3个消息处于未确认消息，仍然在队列中，第2个服务会自动取出第2,3个消息进行处理
-                    //ushort prefetechCount = 3;
-                    ushort prefetechCount = 1;
+                    ushort prefetechCount = 3;
+                    //ushort prefetechCount = 1;
 
                     //prefetechCount表示服务端每次只取指定数量的消息，直到服务端发送ack（执行BasicAck）才获取下一批消息
                     //为了解决consumer负载过多问题
@@ -74,9 +74,11 @@ namespace _02_Server
 
                         //默认发生业务异常后，将消息重新发到队列头，下次可以重新取出处理
                         //也可能该消息被其它服务端(Consumer)处理
-                        if (true)
+                        if (false)
                         {
-                            //队列消息未确认，消息发送给下个consumer处理
+                            //队列消息未确认，重新从队列读取消息处理
+                            //nack方法：处理一定次数后仍未成功，则不再处理，记为已处理或重新将消息发送到队列尾
+                            //参考第38行注释
                             channel.BasicNack(ea.DeliveryTag, false, true);
                             //exceptionReDeliver(channel, ea);
                             //nack(channel, ea);

@@ -1,0 +1,17 @@
+﻿ushort prefetechCount = 3;
+//ushort prefetechCount = 1;
+
+//prefetechCount表示服务端每次只取指定数量的消息，直到服务端发送ack（执行BasicAck）才获取下一批消息
+//为了解决consumer负载过多问题
+channel.BasicQos(0, prefetechCount, false);
+var consumer = new QueueingBasicConsumer(channel);
+
+//consumer启动确认机制，处理完成告知队列，队列再移除消息
+bool noAck = false;
+channel.BasicConsume(queueName, noAck, consumer);
+
+
+
+注意！！！！！！！！
+服务端启动多个后，依次轮流从队列获取消息进行处理，
+各个服务端获取的消息不同
