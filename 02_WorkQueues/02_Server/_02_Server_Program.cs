@@ -76,6 +76,7 @@ namespace _02_Server
                         //也可能该消息被其它服务端(Consumer)处理
                         if (true)
                         {
+                            //队列消息未确认，消息发送给下个consumer处理
                             channel.BasicNack(ea.DeliveryTag, false, true);
                             //exceptionReDeliver(channel, ea);
                             //nack(channel, ea);
@@ -85,6 +86,7 @@ namespace _02_Server
                             //服务端不向队列发送确认消息时，消息一直处于Unacked状态 
                             //服务端关闭后，处于Unacked状态的消息又会变为Ready状态
                             //？DeliveryTag=1，为什么等于1，1表示什么意思，未知
+                            //队列消息确认，消息从队列中移除
                             channel.BasicAck(ea.DeliveryTag, false);
                         }
                     }

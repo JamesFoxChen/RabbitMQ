@@ -13,7 +13,7 @@ namespace _03_Client
     {
         static void Main(string[] args)
         {
-            var factory = new ConnectionFactory() { HostName = "localhost" };
+            var factory = new ConnectionFactory() { HostName = "localhost,192.168.1.29" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
