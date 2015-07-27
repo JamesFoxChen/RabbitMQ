@@ -10,12 +10,23 @@ namespace _08_Client
     {
         private static string predix = "http://localhost:15672/api/";
 
-        public static string OverView()
+        public static string GetOverView()
         {
             return predix + "overview";
         }
 
-        public static string Exchanges()
+        public static string GetConnections()
+        {
+            return predix + "connections";
+        }
+
+        public static string GetChannels()
+        {
+            return predix + "channels";
+        }
+
+        #region Exchanges
+        public static string GetExchanges()
         {
             return predix + "exchanges";
         }
@@ -32,6 +43,50 @@ namespace _08_Client
             //return predix + "exchanges/vhost/name/publish";
             return predix + "exchanges/%2F/logs/publish";
         }
-        
+        #endregion
+
+        #region Queues
+        public static string GetQueues()
+        {
+            return predix + "queues";
+        }
+
+        public static string GetQueueByName(string queueName)
+        {
+            return predix + "queues/%2F/" + queueName;
+        }
+        #endregion
+
+        #region Bindings
+        public static string GetBindings()
+        {
+            return predix + "bindings" ;
+        }
+        #endregion
+
+        public static string GetConsumers()
+        {
+            return predix + "consumers";
+        }
+
+        public static string GetVhosts()
+        {
+            return predix + "vhosts";
+        }
+
+        public static string GetUsers()
+        {
+            return predix + "users";
+        }
+
+        public static string GetParameters()
+        {
+            return predix + "parameters";
+        }
+
+        public static string GetPolicies()
+        {
+            return predix + "policies";
+        }
     }
 }
