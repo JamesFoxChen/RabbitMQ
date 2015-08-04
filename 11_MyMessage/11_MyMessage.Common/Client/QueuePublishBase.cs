@@ -47,6 +47,9 @@ namespace _11_MyMessage.Common.Client
                 factory.VirtualHost = QueueSetttiong.VirtualHost;
                 factory.Protocol = Protocols.DefaultProtocol;
 
+                //连接断开后自动恢复
+                factory.AutomaticRecoveryEnabled = true;
+
                 this.connection = factory.CreateConnection();
                 this.channel = connection.CreateModel();
 
