@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06_Client", "06_RPC\06_Clie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10_Doc", "10_Doc", "{5280885C-F5D4-4586-9161-EE48BA1FD16B}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\Users\Administrator\Desktop\JsonCSharpClassGenerator.zip = ..\..\Users\Administrator\Desktop\JsonCSharpClassGenerator.zip
+		10_Doc\JsonCSharpClassGenerator.zip = 10_Doc\JsonCSharpClassGenerator.zip
 		10_Doc\说明.txt = 10_Doc\说明.txt
 	EndProjectSection
 EndProject
@@ -76,6 +76,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11.MyMessage.Client.Tests", "11_MyMessage\11.MyMessage.Client.Tests\11.MyMessage.Client.Tests.csproj", "{CD07D50C-51EF-47B5-9055-53924BB5F343}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11.MyMessage.Client.Distribute", "11_MyMessage\11.MyMessage.Client.Distribute\11.MyMessage.Client.Distribute.csproj", "{90183ECF-2EAF-44E2-A9A4-D4EBA4729552}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "12_Cluster", "12_Cluster", "{7555BCE8-945A-418D-A0BD-05AAB66EB1E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12.Cluster.Client", "12_Cluster\12.Cluster.Client\12.Cluster.Client.csproj", "{BEFA2258-E6BE-42B5-9657-7D6E4A586F89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -179,6 +183,10 @@ Global
 		{90183ECF-2EAF-44E2-A9A4-D4EBA4729552}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90183ECF-2EAF-44E2-A9A4-D4EBA4729552}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90183ECF-2EAF-44E2-A9A4-D4EBA4729552}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEFA2258-E6BE-42B5-9657-7D6E4A586F89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEFA2258-E6BE-42B5-9657-7D6E4A586F89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEFA2258-E6BE-42B5-9657-7D6E4A586F89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEFA2258-E6BE-42B5-9657-7D6E4A586F89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -208,5 +216,6 @@ Global
 		{828F14CD-8DC2-46D9-A2B2-BA1C19AA3027} = {E08FCC79-15A3-4780-A785-F5E7E3DD7C89}
 		{CD07D50C-51EF-47B5-9055-53924BB5F343} = {E08FCC79-15A3-4780-A785-F5E7E3DD7C89}
 		{90183ECF-2EAF-44E2-A9A4-D4EBA4729552} = {E08FCC79-15A3-4780-A785-F5E7E3DD7C89}
+		{BEFA2258-E6BE-42B5-9657-7D6E4A586F89} = {7555BCE8-945A-418D-A0BD-05AAB66EB1E4}
 	EndGlobalSection
 EndGlobal
